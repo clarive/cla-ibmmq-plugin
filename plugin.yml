@@ -1,0 +1,9 @@
+name: IBM MQ Plugin
+description: The IBM MQ plugin integrates Clarive with the IBM MQ APIs
+version: 1.0
+icon: https://cdn.rawgit.com/clarive/cla-ibmmq-plugin/master/public/icon/ibmmq.svg?sanitize=true
+url: https://github.com/clarive/cla-ibmmq-plugin
+requires:
+  - clarive_version: 7.4 <= version
+dependencies:
+  - cla-ibmmq-plugin
