@@ -111,14 +111,14 @@ const handler = (ctx, params) => {
                 );
             }
         } else if (errors === 'return') {
-            log.error(`${_('IBMMQ ')} ${cmd} ${_(' task error')}: ${output}`);
+            log.error(`${_('IBMMQ ')} ${cmd} ${_(' request error')}: ${output}`);
             res.push({
                 cmd,
                 success: 0,
                 message: 'Invalid response from REST api ' + output
             });
         } else {
-            log.error(`${_('IBMMQ ')} ${cmd} ${_(' task error')}: ${output}`);
+            log.error(`${_('IBMMQ ')} ${cmd} ${_(' request error')}: ${output}`);
             throw new Error('Invalid response from REST api ' + output);
         }
     });
