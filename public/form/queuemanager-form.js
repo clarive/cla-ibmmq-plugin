@@ -59,7 +59,7 @@
         name: 'cliPath',
         value: params.rec.cliPath || "",
         fieldLabel: _('Command-line path (prepended to commands such as setmqaut)'),
-        allowBlank: false
+        allowBlank: true
     });
 
 
