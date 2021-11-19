@@ -1,3 +1,5 @@
+declare var _;
+declare var require;
 const reg = require('cla/reg');
 
 const rulebook = {
@@ -41,7 +43,7 @@ const handler = (ctx, params) => {
     const errors = params.errors || 'fail';
 
     const qm = ci.load(queueManager);
-    const fullUrl =
+    let fullUrl =
         qm.webURL() +
         '/ibmmq/rest/v1/admin/action/qmgr/' +
         qm.queueManager() +
@@ -88,24 +90,35 @@ const handler = (ctx, params) => {
             const msg = cr.map(it => it.text).join('\n');
 
             if (code === 0) {
-                console.log('OK: ' + cmd + ':\n' + msg + '\n');
+                log.info(
+                    `${_('IBMMQ ')} ${cmd} ${_(' task finished')}: ${msg}`,
+                    output
+                );
                 res.push({ cmd, success: 1, message: msg });
             } else if (errors === 'return') {
-                console.log('ERROR: ' + cmd + ':\n' + msg + '\n');
+                log.error(
+                    `${_('IBMMQ ')} ${cmd} ${_(' task error')}: ${msg}`,
+                    output
+                );
                 res.push({ cmd, success: 0, message: msg });
             } else {
+                log.error(
+                    `${_('IBMMQ ')} ${cmd} ${_(' task error')}: ${msg}`,
+                    output
+                );
                 throw new Error(
                     'IBM MQ Error for command ' + cmd + ': ' + msg + '\n'
                 );
             }
         } else if (errors === 'return') {
-            console.log('ERROR: ' + cmd + ':\n' + output + '\n');
+            log.error(`${_('IBMMQ ')} ${cmd} ${_(' task error')}: ${output}`);
             res.push({
                 cmd,
                 success: 0,
                 message: 'Invalid response from REST api ' + output
             });
         } else {
+            log.error(`${_('IBMMQ ')} ${cmd} ${_(' task error')}: ${output}`);
             throw new Error('Invalid response from REST api ' + output);
         }
     });
